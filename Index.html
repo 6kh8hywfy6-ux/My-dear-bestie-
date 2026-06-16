@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Best Friend ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #050505;
+            color: #fff;
+            overflow: hidden; /* Prevents scrollbars */
+            user-select: none;
+        }
+
+        /* Full Screen Backgrounds */
+        .bg-layer {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0; background: linear-gradient(135deg, #0a0a1a, #1a0b1c);
+            transition: background 1s ease;
+        }
+
+        /* Particle Container */
+        #particle-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1; pointer-events: none;
+        }
+
+        /* Screens Logic */
+        .screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 10; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20px; text-align: center;
+        }
+        .screen.active {
+            opacity: 1; visibility: visible; transform: scale(1);
+        }
+        .screen.hidden { transform: scale(0.9); }
+
+        /* Typography & Glassmorphism */
+        h1.title {
+            font-family: 'Dancing Script', cursive; font-size: 4rem;
+            background: linear-gradient(to right, #ff7eb3, #ff758c);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255, 117, 140, 0.3); margin-bottom: 20px;
+        }
+        h2.subtitle { font-size: 2.5rem; font-family: 'Dancing Script', cursive; margin-bottom: 15px; color: #fff;}
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+            padding: 40px; max-width: 600px; width: 90%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.05);
+        }
+        .glass-card p { font-size: 1.1rem; line-height: 1.8; color: #ddd; font-weight: 300; }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(45deg, #ff2a74, #ff7eb3);
+            border: none; padding: 15px 35px; border-radius: 30px;
+            color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            margin-top: 30px; box-shadow: 0 0 20px rgba(255, 42, 116, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(255, 42, 116, 0.7); }
+        .btn-back { background: rgba(255,255,255,0.1); box-shadow: none; margin-top: 20px; }
+
+        /* Gifts Grid */
+        .gifts-menu {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 30px;
+        }
+        .gift-box {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px; padding: 30px 20px; cursor: pointer;
+            transition: all 0.4s ease; backdrop-filter: blur(10px);
+        }
+        .gift-box:hover {
+            background: rgba(255, 255, 255, 0.15); transform: translateY(-10px);
+            border-color: #ff7eb3; box-shadow: 0 10px 20px rgba(255, 126, 179, 0.3);
+        }
+        .gift-icon { font-size: 3rem; margin-bottom: 10px; }
+        .gift-title { font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;}
+
+        /* Floating Animation for Elements */
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+        .particle { position: absolute; pointer-events: none; }
+
+        /* Responsive */
+        @media(max-width: 600px) {
+            h1.title { font-size: 3rem; }
+            .gifts-menu { grid-template-columns: 1fr; gap: 15px; }
+            .glass-card { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-layer" id="bg-layer"></div>
+    <div id="particle-container"></div>
+
+    <!-- PAGE 1: FRONT PAGE -->
+    <div class="screen active" id="page-home">
+        <div class="glass-card">
+            <h1 class="title">Hey Bestie...</h1>
+            <p>You are the most precious soul I know. Today is June 20th, a day that brought a literal angel to this world. I didn't want to wish you like everyone else, because to me, you are not like everyone else.</p>
+            <p style="margin-top: 15px;">I've prepared a tiny digital universe just for you. Are you ready to see what I made?</p>
+            <button class="btn" onclick="openMenu()">Yes, Show Me! ✨</button>
+        </div>
+    </div>
+
+    <!-- PAGE 2: GIFTS MENU -->
+    <div class="screen hidden" id="page-menu">
+        <h1 class="title" style="font-size: 3rem;">Your Birthday Gifts</h1>
+        <p style="color: #aaa; margin-bottom: 20px;">Open them one by one, beautifully...</p>
+        
+        <div class="gifts-menu">
+            <div class="gift-box" onclick="openGift('snow', '#0a192f')">
+                <div class="gift-icon">🎁</div>
+                <div class="gift-title">Gift 1</div>
+            </div>
+            <div class="gift-box" onclick="openGift('rose', '#2a0a18')">
+                <div class="gift-icon">🎁</div>
+                <div class="gift-title">Gift 2</div>
+            </div>
+            <div class="gift-box" onclick="openGift('balloon', '#1a0a2a')">
+                <div class="gift-icon">🎁</div>
+                <div class="gift-title">Gift 3</div>
+            </div>
+            <div class="gift-box" onclick="openGift('teddy', '#220a0a')">
+                <div class="gift-icon">👑</div>
+                <div class="gift-title">Final Gift</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GIFT 1: SNOW THEME -->
+    <div class="screen hidden" id="page-snow">
+        <div class="glass-card">
+            <h2 class="subtitle" style="color: #88ccff;">The Promise of Peace ❄️</h2>
+            <p>Just like this falling snow, I pray your life always remains pure, peaceful, and stunningly beautiful. Life gets tough sometimes, but remember, as your best friend, I will always be your shield through every winter.</p>
+            <p style="margin-top: 15px;">You have a heart of gold. Never let the world change the beautiful person you are.</p>
+            <button class="btn btn-back" onclick="openMenu()">Go Back</button>
+        </div>
+    </div>
+
+    <!-- GIFT 2: ROSE THEME -->
+    <div class="screen hidden" id="page-rose">
+        <div class="glass-card">
+            <h2 class="subtitle" style="color: #ff4d6d;">The Bloom of Happiness 🌹</h2>
+            <p>Like these endless falling roses, may your life's path be paved with love, respect, and fragrance. You deserve every ounce of happiness in this universe.</p>
+            <p style="margin-top: 15px;">Thank you for listening to my rants, for tolerating my madness, and for always being my safe space. You are rare.</p>
+            <button class="btn btn-back" onclick="openMenu()">Go Back</button>
+        </div>
+    </div>
+
+    <!-- GIFT 3: BALLOON THEME -->
+    <div class="screen hidden" id="page-balloon">
+        <div class="glass-card">
+            <h2 class="subtitle" style="color: #c77dff;">Soaring Dreams 🎈</h2>
+            <p>Let your dreams fly as high as these balloons! You have so much potential inside you. Whatever you wish to achieve this year, I know you will conquer it.</p>
+            <p style="margin-top: 15px;">Never doubt yourself. Step forward with confidence, and if you ever feel like falling, turn around... your best friend is right here catching you.</p>
+            <button class="btn btn-back" onclick="openMenu()">Go Back</button>
+        </div>
+    </div>
+
+    <!-- GIFT 4: TEDDY & BIRTHDAY GRAND FINALE -->
+    <div class="screen hidden" id="page-teddy">
+        <div class="glass-card" style="border-color: #ffdf00; box-shadow: 0 0 40px rgba(255,223,0,0.2);">
+            <h1 class="title" style="font-size: 3.5rem; background: linear-gradient(to right, #ffdf00, #ff8c00); -webkit-background-clip: text;">Happy Birthday! 🎂</h1>
+            <p style="font-size: 1.2rem; font-weight: 400; color: #fff;">To the most gorgeous, cute, and absolute queen of my life!</p>
+            <p style="margin-top: 15px;">May this 20th of June bring everything you have ever prayed for. May you smile so much that your cheeks hurt. Sending you infinite virtual hugs and a million teddy bears for comfort! 🧸💖</p>
+            <p style="margin-top: 15px; font-style: italic;">Stay crazy, stay sweet, and stay mine (as a bestie!). Enjoy your day!</p>
+            <button class="btn btn-back" onclick="openMenu()">Back to Menu</button>
+        </div>
+    </div>
+
+    <script>
+        const bgLayer = document.getElementById('bg-layer');
+        const particleContainer = document.getElementById('particle-container');
+        let particleInterval;
+
+        // Navigation Logic
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => {
+                s.classList.remove('active');
+                s.classList.add('hidden');
+            });
+            const target = document.getElementById(screenId);
+            target.classList.remove('hidden');
+            target.classList.add('active');
+        }
+
+        function openMenu() {
+            stopParticles();
+            bgLayer.style.background = 'linear-gradient(135deg, #0a0a1a, #1a0b1c)';
+            switchScreen('page-menu');
+        }
+
+        function openGift(theme, bgColor) {
+            bgLayer.style.background = bgColor;
+            switchScreen('page-' + theme);
+            startParticles(theme);
+        }
+
+        // Particle Engine
+        function startParticles(theme) {
+            stopParticles(); // Clear previous
+            
+            let emojiArr = [];
+            let speed = 400;
+            let sizeBase = 20;
+
+            if(theme === 'snow') {
+                emojiArr = ['❄️', '❅', '❆'];
+                speed = 200;
+                sizeBase = 15;
+            } else if (theme === 'rose') {
+                emojiArr = ['🌹', '🥀', '🌸'];
+                speed = 300;
+                sizeBase = 25;
+            } else if (theme === 'balloon') {
+                emojiArr = ['🎈', '✨', '🎈', '💖'];
+                speed = 500;
+                sizeBase = 35;
+            } else if (theme === 'teddy') {
+                emojiArr = ['🧸', '🎉', '🎂', '💖', '🎁'];
+                speed = 300;
+                sizeBase = 40;
+            }
+
+            particleInterval = setInterval(() => {
+                createParticle(emojiArr, sizeBase, theme);
+            }, speed);
+        }
+
+        function stopParticles() {
+            clearInterval(particleInterval);
+            particleContainer.innerHTML = '';
+        }
+
+        function createParticle(emojis, sizeBase, theme) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Random Emoji
+            particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            // Random styling
+            const size = Math.random() * 20 + sizeBase;
+            particle.style.fontSize = size + 'px';
+            particle.style.left = Math.random() * 100 + 'vw';
+            
+            // Animation duration
+            const duration = Math.random() * 5 + 5; // 5 to 10 seconds
+            particle.style.animation = `float ${duration}s linear forwards`;
+
+            // If snow or rose, fall down. If balloon or teddy, float up.
+            if(theme === 'snow' || theme === 'rose') {
+                particle.style.top = '-10vh';
+                particle.style.animation = `floatDown ${duration}s linear forwards`;
+            } else {
+                particle.style.bottom = '-10vh';
+                particle.style.animation = `floatUp ${duration}s linear forwards`;
+            }
+
+            particleContainer.appendChild(particle);
+
+            // Remove particle after animation
+            setTimeout(() => {
+                particle.remove();
+            }, duration * 1000);
+        }
+
+        // Add dynamically created keyframes for Up and Down flows
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes floatDown {
+                0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { transform: translateY(110vh) translateX(${Math.random() * 100 - 50}px) rotate(360deg); opacity: 0; }
+            }
+            @keyframes floatUp {
+                0% { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { transform: translateY(-10vh) translateX(${Math.random() * 100 - 50}px) rotate(360deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+    </script>
+</body>
+</html>
